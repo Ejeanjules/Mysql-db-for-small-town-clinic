@@ -1,4 +1,4 @@
-use msis230; 
+use Clinicdatabase; 
 
 SELECT 
     e.employeeID,

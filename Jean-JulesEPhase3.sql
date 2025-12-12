@@ -1,4 +1,4 @@
-use MSIS230;
+use ClincDatabase;
 
 
 SELECT * FROM Patient

@@ -1,4 +1,4 @@
-use msis230;
+use Clinicdatabase;
 
 SELECT 
     CONCAT(employeeFName, ' ', employeeLName) AS full_name,

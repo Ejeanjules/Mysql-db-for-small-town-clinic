@@ -1,4 +1,4 @@
-use msis230;
+use Clinicdatabase;
 
 SELECT state, COUNT(patientID) AS total_patients
 FROM patient

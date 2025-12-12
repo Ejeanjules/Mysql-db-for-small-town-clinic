@@ -1,0 +1,117 @@
+USE MSIS230;
+
+DROP TABLE IF EXISTS Diagnosis;
+DROP TABLE IF EXISTS MedicalHistory;
+DROP TABLE IF EXISTS EmployeeSpecialty;
+DROP TABLE IF EXISTS Appointments;
+
+
+DROP TABLE IF EXISTS Patients;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Specialty;
+DROP TABLE IF EXISTS MedicalConditions;
+DROP TABLE IF EXISTS Schedule;
+DROP TABLE IF EXISTS Surgery;
+DROP TABLE IF EXISTS Prescription;
+DROP TABLE IF EXISTS EmployeeType;   
+
+
+
+CREATE TABLE Patient (
+    PatientID INT PRIMARY KEY,
+    Password VARCHAR(20),
+    PatientLname VARCHAR(25),
+    PatientFname VARCHAR(25),
+    Street VARCHAR(25),
+    City VARCHAR(20),
+    State VARCHAR(2),
+    Zip VARCHAR(10),
+    Gender CHAR(1)
+);
+
+CREATE TABLE Employee (
+    EmployeeID INT PRIMARY KEY,
+    Password VARCHAR(25),
+    EmployeeLname VARCHAR(25),
+    EmployeeFName VARCHAR(25),
+    TypeID VARCHAR(10),
+    Gender CHAR(1),
+    DateOfHire DATE
+);
+
+CREATE TABLE Specialty (
+    SpecialtyID INT PRIMARY KEY,
+    Description VARCHAR(20)
+);
+
+CREATE TABLE MedicalConditions (
+    ConditionID INT PRIMARY KEY,
+    Description VARCHAR(50)
+);
+
+CREATE TABLE Schedule (
+    EmployeeID INT,
+    StartTime TIME,
+    EndTime TIME,
+    DayOfWeek INT,
+    PRIMARY KEY (EmployeeID, DayOfWeek)
+);
+
+CREATE TABLE Surgery (
+    SurgeryID INT PRIMARY KEY,
+    Description VARCHAR(40)
+);
+
+CREATE TABLE Prescription (
+    PrescriptionID INT PRIMARY KEY,
+    Description VARCHAR(20)
+);
+
+CREATE TABLE EmployeeType (
+    TypeID INT PRIMARY KEY,
+    Description VARCHAR(30)
+);
+
+
+CREATE TABLE MedicalHistory (
+    PatientID INT,
+    Date DATE,
+    ConditionID INT,
+    SurgeryID INT,
+    PrescriptionID INT,
+    PRIMARY KEY (PatientID, Date),
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID),
+    FOREIGN KEY (ConditionID) REFERENCES MedicalConditions(ConditionID),
+    FOREIGN KEY (SurgeryID) REFERENCES Surgery(SurgeryID),
+    FOREIGN KEY (PrescriptionID) REFERENCES Prescription(PrescriptionID)
+);
+
+CREATE TABLE Appointments (
+    AppointmentID INT PRIMARY KEY,
+    PatientID INT,
+    EmployeeID INT,
+    Date DATE,
+    StartTime TIME,
+    Duration INT,
+    Status VARCHAR(10),
+	constraint FOREIGN KEY (PatientID) REFERENCES Patient(PatientID),
+	FOREIGN KEY(EmployeeID) REFERENCES Employee(EmployeeID)
+);
+
+CREATE TABLE Diagnosis (
+    AppointmentID INT PRIMARY KEY,
+    Diagnosis VARCHAR(255),
+    PrescriptionID INT,
+    FOREIGN KEY (AppointmentID) REFERENCES Appointments(AppointmentID),
+    FOREIGN KEY (PrescriptionID) REFERENCES Prescription(PrescriptionID)
+);
+
+CREATE TABLE EmployeeSpecialty (
+    EmployeeID INT,
+    SpecialtyID INT,
+    PRIMARY KEY (EmployeeID, SpecialtyID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
+    FOREIGN KEY (SpecialtyID) REFERENCES Specialty(SpecialtyID)
+);
+
+ 

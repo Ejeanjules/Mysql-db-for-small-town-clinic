@@ -1,4 +1,4 @@
-USE MSIS230;
+USE ClinicDatabase;
 
 DROP TABLE IF EXISTS Diagnosis;
 DROP TABLE IF EXISTS MedicalHistory;
